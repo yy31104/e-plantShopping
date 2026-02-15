@@ -14,8 +14,12 @@ const CartItem = ({ onContinueShopping }) => {
     }, 0);
   };
 
-  const handleContinueShopping = (e) => {
-    onContinueShopping(e);
+  const calculateTotalItems = () => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  };
+
+  const handleContinueShopping = () => {
+    onContinueShopping();
   };
 
   const handleCheckoutShopping = (e) => {
@@ -32,9 +36,13 @@ const CartItem = ({ onContinueShopping }) => {
       return;
     }
 
+    const totalItems = calculateTotalItems();
+    const totalAmount = calculateTotalAmount().toFixed(2);
     dispatch(clearCart());
-    alert("Order placed successfully!");
-    onContinueShopping(e);
+    alert(
+      `Order placed successfully!\nItems: ${totalItems}\nTotal: $${totalAmount}\nReturning to product listing.`,
+    );
+    onContinueShopping();
   };
 
   const handleIncrement = (item) => {
@@ -109,10 +117,7 @@ const CartItem = ({ onContinueShopping }) => {
         Total Cart Amount: ${calculateTotalAmount().toFixed(2)}
       </div>
       <div className="continue_shopping_btn">
-        <button
-          className="get-started-button"
-          onClick={(e) => handleContinueShopping(e)}
-        >
+        <button className="get-started-button" onClick={handleContinueShopping}>
           Continue Shopping
         </button>
         <br />

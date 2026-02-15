@@ -295,8 +295,7 @@ function ProductList({ onHomeClick }) {
     setShowCart(false);
   };
 
-  const handleContinueShopping = (e) => {
-    e.preventDefault();
+  const handleContinueShopping = () => {
     setShowCart(false);
   };
 
