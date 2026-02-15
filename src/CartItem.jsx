@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeItem, updateQuantity } from "./CartSlice";
+import { clearCart, removeItem, updateQuantity } from "./CartSlice";
 import "./CartItem.css";
 
 const CartItem = ({ onContinueShopping }) => {
@@ -20,7 +20,21 @@ const CartItem = ({ onContinueShopping }) => {
 
   const handleCheckoutShopping = (e) => {
     e.preventDefault();
-    alert("Functionality to be added for future reference");
+    if (cart.length === 0) {
+      alert("Your cart is empty.");
+      return;
+    }
+
+    const shouldCheckout = window.confirm(
+      "Proceed to checkout and place your order?",
+    );
+    if (!shouldCheckout) {
+      return;
+    }
+
+    dispatch(clearCart());
+    alert("Order placed successfully!");
+    onContinueShopping(e);
   };
 
   const handleIncrement = (item) => {
