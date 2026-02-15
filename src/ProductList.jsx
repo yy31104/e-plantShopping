@@ -8,13 +8,14 @@ function ProductList({ onHomeClick }) {
   const [showCart, setShowCart] = useState(false);
   const dispatch = useDispatch();
   const CartItems = useSelector((state) => state.cart.items);
+  const activeCartItems = CartItems.filter((item) => item.quantity > 0);
 
   const calculateTotalQuantity = () => {
-    return CartItems ? CartItems.length : 0;
+    return activeCartItems.length;
   };
 
   const isPlantInCart = (plantName) => {
-    return CartItems.some((item) => item.name === plantName);
+    return activeCartItems.some((item) => item.name === plantName);
   };
 
   const plantsArray = [
