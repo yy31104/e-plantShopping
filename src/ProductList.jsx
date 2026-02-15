@@ -6,14 +6,15 @@ import { addItem } from "./CartSlice";
 
 function ProductList({ onHomeClick }) {
   const [showCart, setShowCart] = useState(false);
-  const [addedToCart, setAddedToCart] = useState({});
   const dispatch = useDispatch();
   const CartItems = useSelector((state) => state.cart.items);
 
   const calculateTotalQuantity = () => {
-    return CartItems
-      ? CartItems.reduce((total, item) => total + item.quantity, 0)
-      : 0;
+    return CartItems ? CartItems.length : 0;
+  };
+
+  const isPlantInCart = (plantName) => {
+    return CartItems.some((item) => item.name === plantName);
   };
 
   const plantsArray = [
@@ -300,11 +301,6 @@ function ProductList({ onHomeClick }) {
 
   const handleAddToCart = (product) => {
     dispatch(addItem(product));
-
-    setAddedToCart((prevState) => ({
-      ...prevState,
-      [product.name]: true,
-    }));
   };
 
   return (
@@ -383,12 +379,12 @@ function ProductList({ onHomeClick }) {
                     <div className="product-cost">{plant.cost}</div>
                     <button
                       className={`product-button ${
-                        addedToCart[plant.name] ? "added-to-cart" : ""
+                        isPlantInCart(plant.name) ? "added-to-cart" : ""
                       }`}
                       onClick={() => handleAddToCart(plant)}
-                      disabled={addedToCart[plant.name]}
+                      disabled={isPlantInCart(plant.name)}
                     >
-                      {addedToCart[plant.name]
+                      {isPlantInCart(plant.name)
                         ? "Added to Cart"
                         : "Add to Cart"}
                     </button>
