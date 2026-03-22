@@ -9,7 +9,7 @@ A React + Redux Toolkit shopping cart app for an online plant store called **Par
 - Paradise Nursery welcome message
 - company information (`AboutUs.jsx`)
 - background hero image (`App.css`)
-- "Get Started" button
+- "Get Started" button (`/products`)
 
 ### Product List Page
 
@@ -17,7 +17,7 @@ A React + Redux Toolkit shopping cart app for an online plant store called **Par
 - at least 6 plants per category
 - plant image, name, description, and price
 - Add to Cart button that becomes disabled after adding
-- Navbar links (Home/Plants/Cart)
+- Router-based navigation (`/`, `/products`, `/cart`)
 - dynamic cart icon count
 
 ### Cart Page
@@ -34,6 +34,12 @@ A React + Redux Toolkit shopping cart app for an online plant store called **Par
 - `addItem`
 - `removeItem`
 - `updateQuantity`
+- item identity based on stable `id` (supports same-name products)
+
+### Testing
+
+- reducer unit tests with Vitest
+- covers add/increment/remove/update and duplicate-name-different-id behavior
 
 ## Tech Stack
 
@@ -41,20 +47,31 @@ A React + Redux Toolkit shopping cart app for an online plant store called **Par
 - Vite 5
 - Redux Toolkit
 - React Redux
+- React Router DOM
 - CSS
+- Vitest
 
 ## Project Structure
 
 ```text
 src/
+  components/
+    Header.jsx
+    Header.css
+    ProductCard.jsx
+    CategorySection.jsx
+  data/
+    plants.js
   AboutUs.jsx
   App.jsx
   App.css
+  CartPage.jsx
   ProductList.jsx
   ProductList.css
   CartItem.jsx
   CartItem.css
-  CartSlice.jsx
+  CartSlice.js
+  CartSlice.test.js
   store.js
   main.jsx
 ```
@@ -77,6 +94,12 @@ Open the local URL shown by Vite (usually `http://localhost:5173`).
 
 ```bash
 npm run build
+```
+
+## Test
+
+```bash
+npm run test
 ```
 
 ## Preview Production Build
@@ -114,5 +137,5 @@ The app is wrapped with `<Provider store={store}>` in `src/main.jsx`.
 
 ## Notes
 
-- Cart count currently reflects distinct active items in cart.
+- Cart count reflects total item quantity.
 - Checkout is a placeholder and can be extended with real payment flow later.

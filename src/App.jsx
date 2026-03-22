@@ -1,49 +1,39 @@
+import { Link, Navigate, Route, Routes } from "react-router-dom";
+import ProductList from "./ProductList";
+import AboutUs from "./AboutUs";
+import CartPage from "./CartPage";
+import "./App.css";
 
-import React, { useState } from 'react';
-import ProductList from './ProductList';
-import './App.css';
-import AboutUs from './AboutUs';
-
-function App() {
-  
-  const [showProductList, setShowProductList] = useState(false);
-
-  const handleGetStartedClick = () => {
-    setShowProductList(true);
-  };
-
-  const handleHomeClick = () => {
-    setShowProductList(false);
-  };
-
+function LandingPage() {
   return (
-    <div className="app-container">
-      <div className={`landing-page ${showProductList ? 'fade-out' : ''}`}>
-        <div className="background-image"></div>
-        <div className="content">
-         <div className="landing_content">
-         <h1>Welcome To Paradise Nursery</h1>
-          <div className="divider"></div>
+    <div className="landing-page">
+      <div className="background-image" />
+      <div className="content">
+        <section className="landing-content">
+          <h1>Welcome To Paradise Nursery</h1>
+          <div className="divider" />
           <p>Where Green Meets Serenity</p>
-         
-          <button className="get-started-button" onClick={handleGetStartedClick}>
+          <Link className="get-started-button" to="/products">
             Get Started
-          </button>
-         </div>
-          <div className="aboutus_container">
-          <AboutUs/>
-          </div>
-          </div>
-
-      </div>
-      <div className={`product-list-container ${showProductList ? 'visible' : ''}`}>
-        <ProductList onHomeClick={handleHomeClick}/>
+          </Link>
+        </section>
+        <section className="aboutus-container">
+          <AboutUs />
+        </section>
       </div>
     </div>
   );
 }
 
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/products" element={<ProductList />} />
+      <Route path="/cart" element={<CartPage />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
+
 export default App;
-
-
-
